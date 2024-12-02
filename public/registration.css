@@ -1,0 +1,72 @@
+/* Center container and adjust its size */
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Move site name to the top left */
+h1{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1.5rem;
+    margin: 0;
+    text-align: left;
+}
+
+/* Style the form inputs */
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: #005bb5;
+}
+
+/* Style the paragraph with agreement text */
+p {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+    line-height: 1.5;
+}
+
+p a {
+    color: #0073e6;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Already have an account link */
+.container > p {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+
