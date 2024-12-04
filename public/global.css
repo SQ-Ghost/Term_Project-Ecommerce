@@ -58,3 +58,54 @@ footer {
     color: #666;
     margin-top: 20px;
 }
+
+nav{
+    justify-content: center;
+    overflow: hidden;
+    border-width: 1px;
+    border-top-color:grey;
+    /* border-top-style: solid; */
+    border-bottom-style: solid;
+}
+
+nav ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: 100%;
+}
+
+nav li{
+    height: max-content;
+    min-height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    float: left;
+}
+
+nav li a {
+    color: black;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size:medium;
+}
+
+nav li a:hover{
+    color: white;
+    background-color: #666;
+}
+
+nav li img{
+    vertical-align: middle;
+    height:30px;
+    width: 30px;
+}
+
+nav li a:hover img{
+    filter: invert(100%) !important;
+}
