@@ -66,6 +66,8 @@ nav{
     border-top-color:grey;
     /* border-top-style: solid; */
     border-bottom-style: solid;
+    padding-left:20px;
+    padding-right:20px;
 }
 
 nav ul{
