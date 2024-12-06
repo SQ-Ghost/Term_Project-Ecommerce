@@ -63,8 +63,7 @@ nav{
     justify-content: center;
     overflow: hidden;
     border-width: 1px;
-    border-top-color:grey;
-    /* border-top-style: solid; */
+    border-top-style: solid;
     border-bottom-style: solid;
     padding-left:20px;
     padding-right:20px;
@@ -76,6 +75,8 @@ nav ul{
     padding: 0;
     top: 0;
     width: 100%;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 nav li{
