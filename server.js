@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./database');
+const bcrypt = require('bcrypt');  //password hashing/authentication
 
 const app = express();
 app.use(bodyParser.json()); // Parse JSON request bodies
@@ -23,7 +24,7 @@ app.get('/users', (req, res) => {
     });
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
 
     //basic validation for empty fields
@@ -31,12 +32,49 @@ app.post('/register', (req, res) => {
         return res.status(400).json({ error: "All input fields are required." });
     }
 
-    const query = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`;
-    db.run(query, [name, email, password], function (err) {
+    try{
+        //hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const query = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`;
+        db.run(query, [name, email, hashedPassword], function (err) {
+            if (err) {
+                res.status(500).json({ error: "Failed to register user.", details: err.message });
+            } else {
+                res.status(200).json({ message: "User registered successfully!", userId: this.lastID });
+            }
+        });
+    }catch (error){
+        res.status(500).json({ error: "Internal server error.", details: error.message });
+    }
+});
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    // Validate input
+    if (!email || !password) {
+        return res.status(400).json({ error: "All fields are required." });
+    }
+    //look up users by email
+    const query = `SELECT * FROM users WHERE email = ?`;
+    db.get(query, [email], async (err, user) => {
         if (err) {
-            res.status(500).json({ error: "Failed to register user.", details: err.message });
+            res.status(500).json({ error: "Failed to log in. Database error", details: err.message });
+        } else if (!user) {
+            res.status(404).json({ error: "User not found." });
         } else {
-            res.status(200).json({ message: "User registered successfully!", userId: this.lastID });
+            try {
+                // Compare the entered password with the hashed password
+                const isMatch = await bcrypt.compare(password, user.password);
+                if (isMatch) {
+                    res.status(200).json({ message: "Login successful!", user: { id: user.id, name: user.name, email: user.email } });
+                } else {
+                    res.status(401).json({ error: "Invalid password." });
+                }
+            } catch (error) {
+                res.status(500).json({ error: "Internal server error.", details: error.message });
+            }
         }
     });
 });

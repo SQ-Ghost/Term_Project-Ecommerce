@@ -19,6 +19,14 @@ h1{
     text-align: left;
 }
 
+.container h1 {
+    position: static; /* Remove absolute positioning */
+    text-align: center; /* Center horizontally */
+    margin-top: 20px; /* Add space below the site name */
+    font-size: 1.8rem; /* Adjust font size if needed */
+    font-weight: bold; /* Optional: make it stand out */
+}
+
 /* Style the form inputs */
 input {
     width: calc(100% - 20px);
