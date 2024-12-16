@@ -1,14 +1,50 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./database');
+const path = require('path');
 const bcrypt = require('bcrypt');  //password hashing/authentication
 
 const app = express();
 app.use(bodyParser.json()); // Parse JSON request bodies
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Test endpoint
 app.get('/', (req, res) => {
     res.send('Welcome to the E-Commerce API!');
+});
+
+app.get('/registration', (req, res) => {
+    // Serve the registration.html file from the 'public' folder
+    res.sendFile(path.join(__dirname, 'public', 'registration.html'));
+});
+
+app.get('/checkout', (req, res) => {
+    // Serve the registration.html file from the 'public' folder
+    res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
+});
+
+app.get('/faq', (req, res) => {
+    // Serve the registration.html file from the 'public' folder
+    res.sendFile(path.join(__dirname, 'public', 'faq.html'));
+});
+
+app.get('/login', (req, res) => {
+    // Serve the registration.html file from the 'public' folder
+    res.sendFile(path.join(__dirname, 'public', 'log_ing.html'));
+});
+
+app.get('/productpage', (req, res) => {
+    // Serve the registration.html file from the 'public' folder
+    res.sendFile(path.join(__dirname, 'public', 'productpage.html'));
+});
+
+app.get('/settings', (req, res) => {
+    // Serve the registration.html file from the 'public' folder
+    res.sendFile(path.join(__dirname, 'public', 'settings.html'));
+});
+app.get('/home', (req, res) => {
+    // Serve the registration.html file from the 'public' folder
+    res.sendFile(path.join(__dirname, 'public', 'store_home.html'));
 });
 
 // User Registration

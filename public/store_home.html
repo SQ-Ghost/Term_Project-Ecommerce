@@ -9,60 +9,132 @@
 </head>
 <body>
     <header>
-        <div class="site-name">Dream Market</div>
+        <div class="site-name"><a href="/home">Dream Market</a></div>
         <div class="search-bar">
             <input type="text" placeholder="Search for products..." id="search">
             <button type="button">Search</button>
         </div>
     </header>
-
-    <nav class="navbar">
+    <nav>
         <ul>
-            <li><a href="store_home.html">Home</a></li>
-            <li><a href="log_in.html">Login</a></li>
-            <li><a href="registration.html">Register</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
+            <li class="navbaroption">
+                <div class="dropdown">
+                    <a class="dropbtn" href="#">Category 1</a>
+                    <div class="dropdown-content">
+                        <a href="#">Subcategory 1</a>
+                        <a href="#">Subcategory 2</a>
+                        <a href="#">Subcategory 3</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbaroption">
+                <div class="dropdown">
+                    <a class="dropbtn" href="#">Category 2</a>
+                    <div class="dropdown-content">
+                        <a href="#">Subcategory 1</a>
+                        <a href="#">Subcategory 2</a>
+                        <a href="#">Subcategory 3</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbaroption">
+                <div class="dropdown">
+                    <a class="dropbtn" href="#">Category 3</a>
+                    <div class="dropdown-content">
+                        <a href="#">Subcategory 1</a>
+                        <a href="#">Subcategory 2</a>
+                        <a href="#">Subcategory 3</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbaroption">
+                <div class="dropdown">
+                    <a class="dropbtn" href="#">Category 4</a>
+                    <div class="dropdown-content">
+                        <a href="#">Subcategory 1</a>
+                        <a href="#">Subcategory 2</a>
+                        <a href="#">Subcategory 3</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbaroption">
+                <div class="dropdown">
+                    <a class="dropbtn" href="#">Category 5</a>
+                    <div class="dropdown-content">
+                        <a href="#">Subcategory 1</a>
+                        <a href="#">Subcategory 2</a>
+                        <a href="#">Subcategory 3</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbaroption" style="float:right"><a href="/settings"><img src="images/settings-2-svgrepo-com.svg"></a></li>
+            <li class="navbaroption" style="float:right"><a href="#"><img src="images/shopping-cart-svgrepo-com.svg"></a></li>
+            <li class="navbaroption" style="float:right"><a href="#"><img src="images/person-svgrepo-com.svg"></a></li>
         </ul>
     </nav>
 
-<div class="ad-section">
+<!-- <div class="ad-section">
     <div class="ad">
         <img src="ad1-placeholder.jpg" alt="Advertisement 1" class="ad-banner">
     </div>
     <div class="ad">
         <img src="ad2-placeholder.jpg" alt="Advertisement 2" class="ad-banner">
     </div>
-</div>
+</div> -->
 
 
     <main>
-        <h1>Welcome to Dream Market</h1>
-        <div class="store-container">
-            <div class="product-card">
-                <img src="product1.jpg" alt="Product 1" class="product-image">
-                <h2 class="product-title">Product 1</h2>
-                <p class="product-price">$29.99</p>
-                <button class="add-to-cart">Add to Cart</button>
+        <!-- <h1>Welcome to Dream Market</h1> -->
+        <div class="content-layout">
+            <div class="store-container">
+                <div class="row-div">
+                    <div class="product-card">
+                        <img src="images/product-img-placeholder.png" alt="Product 1" class="product-image">
+                        <h2 class="product-title"><a href="/productpage">Product 1</a></h2>
+                        <p class="product-price">$29.99</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="images/product-img-placeholder.png" alt="Product 2" class="product-image">
+                        <h2 class="product-title"><a href="/productpage">Product 2</a></h2>
+                        <p class="product-price">$49.99</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="images/product-img-placeholder.png" alt="Product 3" class="product-image">
+                        <h2 class="product-title"><a href="/productpage">Product 3</a></h2>
+                        <p class="product-price">$19.99</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="row-div">
+                    <div class="product-card">
+                        <img src="images/product-img-placeholder.png" alt="Product 4" class="product-image">
+                        <h2 class="product-title"><a href="/productpage">Product 4</a></h2>
+                        <p class="product-price">$29.99</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="images/product-img-placeholder.png" alt="Product 5" class="product-image">
+                        <h2 class="product-title"><a href="/productpage">Product 5</a></h2>
+                        <p class="product-price">$49.99</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="images/product-img-placeholder.png" alt="Product 6" class="product-image">
+                        <h2 class="product-title"><a href="/productpage">Product 6</a></h2>
+                        <p class="product-price">$19.99</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
             </div>
-            <div class="product-card">
-                <img src="product2.jpg" alt="Product 2" class="product-image">
-                <h2 class="product-title">Product 2</h2>
-                <p class="product-price">$49.99</p>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
-            <div class="product-card">
-                <img src="product3.jpg" alt="Product 3" class="product-image">
-                <h2 class="product-title">Product 3</h2>
-                <p class="product-price">$19.99</p>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
-    <div class="info-cards-container">
+    <!-- <div class="info-cards-container">
         <div class="info-card">
             <h2 class="info-card-title">Limited Time Offer!</h2>
             <p class="info-card-text">Get 50% off on all products.</p>
             <button class="info-card-action">Shop Now</button>
         </div>
-         </div>
+         </div> -->
         </div>
     </main>
 
