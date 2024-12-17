@@ -11,16 +11,20 @@ const db = new sqlite3.Database('./ecommerce.db', (err) => {
 
 // Create tables
 db.serialize(() => {
+    // Drop the existing users table and recreate it (for testing only)
+    //db.run(`DROP TABLE IF EXISTS users`);
     // Users table
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
+            first_name TEXT NOT NULL,
+            last_name TEXT NOT NULL,
             email TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL
         )
     `, (err) => {
         if (err) console.error("Error creating users table:", err.message);
+        //else console.log("Users table created successfully.");
     });
 
     // Products table

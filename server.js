@@ -3,10 +3,27 @@ const bodyParser = require('body-parser');
 const db = require('./database');
 const path = require('path');
 const bcrypt = require('bcrypt');  //password hashing/authentication
+const session = require('express-session');
 
 const app = express();
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+    secret: 'your_secret_key',  // Replace with a strong secret key
+    resave: false,              // Prevents unnecessary session saving
+    saveUninitialized: true,    // Saves sessions even if uninitialized
+    cookie: { maxAge: 3600000 } // Session expires after 1 hour
+}));
+
+// Middleware to check if the user is logged in
+function isAuthenticated(req, res, next) {
+    if (req.session.userId) {
+        next(); // Proceed to the next middleware or route handler
+    } else {
+        res.status(401).send("Unauthorized: Please log in to access this page.");
+    }
+}
 
 // Test endpoint
 app.get('/', (req, res) => {
@@ -18,7 +35,7 @@ app.get('/registration', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'registration.html'));
 });
 
-app.get('/checkout', (req, res) => {
+app.get('/checkout', isAuthenticated, (req, res) => {
     // Serve the registration.html file from the 'public' folder
     res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
 });
@@ -30,19 +47,19 @@ app.get('/faq', (req, res) => {
 
 app.get('/login', (req, res) => {
     // Serve the registration.html file from the 'public' folder
-    res.sendFile(path.join(__dirname, 'public', 'log_ing.html'));
+    res.sendFile(path.join(__dirname, 'public', 'log_in.html'));
 });
 
-app.get('/productpage', (req, res) => {
+app.get('/productpage', isAuthenticated, (req, res) => {
     // Serve the registration.html file from the 'public' folder
     res.sendFile(path.join(__dirname, 'public', 'productpage.html'));
 });
 
-app.get('/settings', (req, res) => {
+app.get('/settings', isAuthenticated, (req, res) => {
     // Serve the registration.html file from the 'public' folder
     res.sendFile(path.join(__dirname, 'public', 'settings.html'));
 });
-app.get('/home', (req, res) => {
+app.get('/home', isAuthenticated, (req, res) => {
     // Serve the registration.html file from the 'public' folder
     res.sendFile(path.join(__dirname, 'public', 'store_home.html'));
 });
@@ -50,7 +67,7 @@ app.get('/home', (req, res) => {
 // User Registration
 // Get all users
 app.get('/users', (req, res) => {
-    const query = `SELECT id, name, email FROM users`; // Exclude passwords for security
+    const query = `SELECT id, first_name, last_name, email FROM users`; // Exclude passwords for security
     db.all(query, [], (err, rows) => {
         if (err) {
             res.status(500).json({ error: "Failed to fetch users.", details: err.message });
@@ -61,26 +78,27 @@ app.get('/users', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { first_name, last_name, email, password } = req.body;
 
-    //basic validation for empty fields
-    if (!name || !email || !password) {
+    // Basic validation for empty fields
+    if (!first_name || !last_name || !email || !password) {
         return res.status(400).json({ error: "All input fields are required." });
     }
 
-    try{
-        //hash the password
+    try {
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const query = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`;
-        db.run(query, [name, email, hashedPassword], function (err) {
+        // Correct SQL query with 4 placeholders
+        const query = `INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)`;
+        db.run(query, [first_name, last_name, email, hashedPassword], function (err) {
             if (err) {
                 res.status(500).json({ error: "Failed to register user.", details: err.message });
             } else {
                 res.status(200).json({ message: "User registered successfully!", userId: this.lastID });
             }
         });
-    }catch (error){
+    } catch (error) {
         res.status(500).json({ error: "Internal server error.", details: error.message });
     }
 });
@@ -104,6 +122,11 @@ app.post('/login', (req, res) => {
                 // Compare the entered password with the hashed password
                 const isMatch = await bcrypt.compare(password, user.password);
                 if (isMatch) {
+                    // Create a session for the logged-in user
+                    req.session.userId = user.id;
+                    req.session.userName = `${user.first_name} ${user.last_name}`;
+                    req.session.email = user.email;
+
                     res.status(200).json({ message: "Login successful!", user: { id: user.id, name: user.name, email: user.email } });
                 } else {
                     res.status(401).json({ error: "Invalid password." });
@@ -112,6 +135,16 @@ app.post('/login', (req, res) => {
                 res.status(500).json({ error: "Internal server error.", details: error.message });
             }
         }
+    });
+});
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ error: "Failed to log out." });
+        }
+        res.clearCookie('connect.sid'); // Clears session cookie
+        res.status(200).json({ message: "Logged out successfully!" });
     });
 });
 
